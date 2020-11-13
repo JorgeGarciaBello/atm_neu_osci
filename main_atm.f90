@@ -57,14 +57,6 @@ program main_atm
     enddo
     close(u)
 
-
-
-
-
-
-
-
-
     
     call zenith_flux_chart()
     print*,'Fin del programa'

@@ -12,9 +12,7 @@ subroutine read_atm_data()
     open(newunit=u,file='atm_data/sk_PREM_density.dat',status='old')
         read(u,*) ((PREM(i,j), j=1,3), i=1,4)
     close(u)
-    print*, PREM(1,:)
-    print*, PREM(2,:)
-    print*, PREM(3,:)
-    print*, PREM(4,:)
-    
+    open(newunit=u,file='atm_data/sk_zenith_bins.dat',status='old')
+        read(u,*) ((zenith_bins(i,j), j=1,2), i=1,20)
+    close(u)        
 end subroutine
