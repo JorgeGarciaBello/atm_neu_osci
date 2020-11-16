@@ -1,1 +1,1 @@
-gfortran modules/types.f90 modules/constants.f90 packages/*.f* probability_of_transition_in_matter/*.f* subroutines/*.f* main_atm.f90
+gfortran modules/types.f90 modules/constants.f90 modules/neu_osc_params_matter.f90 packages/*.f* probability_of_transition_in_matter/*.f* subroutines/*.f* main_atm.f90

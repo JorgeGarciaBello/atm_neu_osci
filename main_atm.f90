@@ -16,13 +16,11 @@ program main_atm
     real(8) :: A_1,A_2            ! Ne1, Ne2 is the electron density intervals
     integer :: u
     integer :: Z,A
-
     real(8) :: probabilityOfTransitionAB,probability_of_transition_in_matter_a_b
     real(8) :: matterDensity
     real(8) :: jump
     integer :: k
-    print*, 'You are in chart1Pee...'
-
+    
     call read_atm_data()
     stop    
 
@@ -50,14 +48,11 @@ program main_atm
     print*,'Pruebas.2020.'
     open(newunit=u,file='atm_results/pruebas.2020.dat')
     do k=1,10000
-        ro_1 = ro_1 + jump
-        !write(u,*) matterDensity(nu,Ne1), probabilityOfTransitionAB(1,1,L,t12,t23,t13,delta,sm,aM,P,nu,Ne1)
+        ro_1 = ro_1 + jump        
         write(u,*) matterDensity(nu,N_A*ro_1*REAL(Z)/REAL(A)), &
         probability_of_transition_in_matter_a_b(1,2,L,t12,t23,t13,delta,sm,aM,P,nu,ro_1,Z,A)
     enddo
     close(u)
-
-    
     call zenith_flux_chart()
     print*,'Fin del programa'
     return
