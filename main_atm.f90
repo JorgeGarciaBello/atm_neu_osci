@@ -7,21 +7,29 @@ program main_atm
     real(8) :: t12,t23,t13,delta
     real(8) :: sm,aM              ! sm,aM are the squared mass difference m=m_21 y M=m_32
     real(8) :: P    
-    real(8) :: eta,rEarth
+    real(8) :: eta
     real(8) :: L                  ! L is the length between the source of neutrinos an the position
     integer :: nu                 ! nu is 1 for neutrinos an 2 for antineutrino
     real(8) :: Ne                 ! Ne is the electron density
     real(8) :: Ne1,Ne2            ! Ne1, Ne2 is the electron density intervals
     real(8) :: ro_1,ro_2            ! Ne1, Ne2 is the electron density intervals
     real(8) :: A_1,A_2            ! Ne1, Ne2 is the electron density intervals
-    integer :: u
+    integer :: u,i
     integer :: Z,A
     real(8) :: probabilityOfTransitionAB,probability_of_transition_in_matter_a_b
     real(8) :: matterDensity
-    real(8) :: jump
+    real(8) :: jump, rV(2), gamma
     integer :: k
     
     call read_atm_data()
+
+    open(newunit=u, file='atm_data/result.dat')
+    do i=1,100
+        gamma = (PI/100.0_dp)*i
+        call sk_get_position_density_vector(rV,0.0_dp,gamma)
+        write(u,*) rV(1), rV(2), sqrt(rV(1)**2 + rV(2)**2)
+    enddo
+    close(u)
     stop    
 
     
@@ -32,8 +40,7 @@ program main_atm
     sm=1E-4
     aM=1E-3
     P=10.0d0             ! Energía en [GeV]
-    eta=5.0d0
-    rEarth=6378.d0       ! Longitud en [Km]
+    eta=5.0d0    
     L=2.0d0*eta*rEarth
     nu=1
     Z=1
