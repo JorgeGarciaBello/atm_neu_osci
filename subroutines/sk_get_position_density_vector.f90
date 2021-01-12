@@ -12,10 +12,9 @@ function sk_get_position_density_vector(r,theta,gamma)
 
     r(1) = a(1) + b(2)
     r(2) = a(2) + b(1)
-
-
-    if()
-
+    !if()
+    sk_get_position_density_vector=0.0_dp
+    return
 end function sk_get_position_density_vector
 
     

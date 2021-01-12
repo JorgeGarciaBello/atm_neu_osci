@@ -12,6 +12,6 @@ subroutine sk_get_position_vector(r,gamma,theta)
     r(1) = a(1) + b(2)
     r(2) = a(2) + b(1)
 
-    if()
-
+    !if()
+    return
 end subroutine sk_get_position_vector
