@@ -23,6 +23,7 @@ program main_atm
     
     call read_atm_data()
     call Eart_3_stages()
+    !call chart_Pee()
 !    open(newunit=u, file='atm_data/result.dat')
 !    do i=1,100
 !        gamma = (PI/100.0_dp)*i
