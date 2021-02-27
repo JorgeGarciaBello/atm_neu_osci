@@ -6,13 +6,15 @@
 !
 !   input: 
 !       n  (int)  => es el tamaño de la partición
-!       i  (int)  => es la posición del punto a generardentro de la partición
+!       i  (int)  => es la posición del punto a generar dentro de la partición
 !       v1 (real) => es el límite inferior del intervalo a partir,
 !                    Debe ser dado como el exponenete de la base 10:
 !                    10^{8} => v1 = 8.
 !       v2 (real) => es el límite superior del intervalo a partir,
 !                    Debe ser dado como el exponenete de la base 10:
 !                    10^{15} => v1 = 15.
+!   output:
+!       x (real)  => es el resultado de a partición en la posición i
 !
 !
 !##################################################################################

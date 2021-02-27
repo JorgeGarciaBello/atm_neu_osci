@@ -1,1 +1,1 @@
-gfortran modules/types.f90 modules/constants.f90 modules/neu_osc_params_matter.f90 packages/*.f* probability_of_transition_in_matter/*.f* subroutines/*.f* tommy_test/Earth_3_stages/*.f90 tommy_test/charts_P_energy/*.f90 main_atm.f90
+gfortran modules/types.f90 modules/constants.f90 modules/neu_osc_params_matter.f90 packages/*.f* probability_of_transition_in_matter/*.f* subroutines/*.f* tommy_test/Earth_3_stages/*.f90 tommy_test/Earth_4_stages/*.f90  tommy_test/Earth_n_stages/*.f90 tommy_test/charts_P_energy/*.f90 testing_probability/*.f90 main_atm.f90

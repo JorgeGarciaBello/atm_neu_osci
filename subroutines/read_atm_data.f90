@@ -14,5 +14,8 @@ subroutine read_atm_data()
     close(u)
     open(newunit=u,file='atm_data/sk_zenith_bins.dat',status='old')
         read(u,*) ((zenith_bins(i,j), j=1,2), i=1,20)
-    close(u)        
+    close(u)
+    open(newunit=u,file='atm_data/sk_ratios.dat',status='old')
+        read(u,*) sk_ratios
+    close(u)
 end subroutine

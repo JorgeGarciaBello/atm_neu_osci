@@ -22,8 +22,16 @@ program main_atm
     integer :: k
     
     call read_atm_data()
-    call Eart_3_stages()
-    !call chart_Pee()
+    !call Eart_3_stages()
+    !call Eart_4_stages()
+    call Earth_n_stages()
+    !call probabilities_difference()
+    !call vacuum_probability_difference()
+
+    
+
+
+    !call c()
 !    open(newunit=u, file='atm_data/result.dat')
 !    do i=1,100
 !        gamma = (PI/100.0_dp)*i

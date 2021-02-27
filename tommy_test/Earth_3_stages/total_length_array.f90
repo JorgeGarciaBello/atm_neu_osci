@@ -11,8 +11,7 @@ subroutine total_length_array(h,L_a)
         L1=rEarth*(  cos(h)-sqrt( (rCore/rEarth)**2-sin(h)**2 )  )
         L2= 2.0_dp*rEarth*sqrt(  (rCore/rEarth)**2-sin(h)**2     )
         L_a(1)=L1; L_a(2)=L2; L_a(3)=L1        
-    else if( h <= (PI/2.0_dp) ) then        
-        
+    else if( h <= (PI/2.0_dp) ) then
         L=2.0_dp*rEarth*cos(h)
         L_a(1)=L
     end if

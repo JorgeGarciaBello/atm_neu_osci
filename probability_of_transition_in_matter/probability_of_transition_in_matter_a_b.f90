@@ -8,7 +8,7 @@ real(8) function probability_of_transition_in_matter_a_b(flvr1,flvr2,L,t12,t23,t
     real(8) :: P                  ! P es el momento del neutrino [GeV]
     integer :: nu                 ! nu is 1 for neutrinos an 2 for antineutrino    
     real(8) :: Ne                 ! Ne is the electron density
-    real(8) :: ro                 ! ro
+    real(8) :: ro                 ! ro [g/cm^3]
     integer :: Z                  ! Z
     integer :: A                  ! A
     real(8) :: probabilityOfTransitionAB
