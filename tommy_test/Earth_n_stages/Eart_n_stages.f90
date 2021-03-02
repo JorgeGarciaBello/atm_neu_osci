@@ -5,14 +5,20 @@ subroutine Earth_n_stages()
     implicit none
     real(dp) :: max_angles(DM-2)
     integer :: num_slices
-    real(dp) :: h=1.11
+    real(dp) :: L_a(DM*2)          ! [ Km ]
+    real(dp) :: h
     
-    !call Earth_n_max_angles_from_stages(max_angles)
-    call Earth_n_set_number_of_slices(num_slices,h)
-    print*, 'num_slices: ', num_slices
-    !print*, num_slices,h
+    call Earth_n_max_angles_from_stages(max_angles)
+    h=max_angles(3)
+
+    call Earth_n_set_number_of_slices(max_angles,num_slices,h)
+    print*, h
+    print*, max_angles
+    print*, num_slices
+    call Earth_total_lengths(num_slices,h,L_a)
+    
     !real(dp) :: ro_a(7)         ! [ g/cm^{3} ]
-    !real(dp) :: L_a(7)          ! [ Km ]    
+    
     !real(dp) :: resutls
     !real(dp) :: h_i, h_f, h
     !real(dp) :: E_i, E_f, jump_E, E
