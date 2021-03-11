@@ -9,7 +9,8 @@ subroutine Earth_n_stages()
     real(dp) :: h
     
     call Earth_n_max_angles_from_stages(max_angles)
-    h=max_angles(3)
+    h=0.0_dp   !max_angles(3)
+    !h=max_angles(3)
 
     call Earth_n_set_number_of_slices(max_angles,num_slices,h)
     print*, h

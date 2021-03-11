@@ -6,22 +6,45 @@ subroutine Earth_total_lengths(num_slices,h,L_a)
     integer  :: num_slices
     real(dp) :: h
     real(dp) :: L_a(num_slices),r_atms(num_slices/2)
-    real(dp) :: L,L1,L2,L3,L4                     ! [ Km ]
-    real(dp) :: L2_b,L3_b
+    real(dp) :: L_tot,L_tot_A,L_tot_B,L_tot_AB    
     real(dp) :: max_angles(DM-2)
     real(dp) :: max_angles_zero(DM-1)
     integer  :: i
 
     max_angles_zero(1)=0.0
     max_angles_zero(2:)=max_angles
-
-    do i=1,num_slices/2
-        !print*, i, cos(h),( sk_ratios(DM-i)/(rEarth + rAtm) )**2, sin(h)**2
+    ! Obteniendo longitudes para el calculo de las longitudes de cada capa de la Tierra
+    L_tot_A=rEarth
+    L_tot_B=rEarth+rAtm
+    L_tot_AB=L_tot_A*L_tot_B*cos(PI-(2.0_dp*h))    
+    L_tot=sqrt( L_tot_A**2 + L_tot_B**2 - 2.0_dp*L_tot_AB )
+    do i=1,num_slices/2        
         r_atms(i) = (rEarth + rAtm)*(cos(h)-sqrt(( sk_ratios(DM-i)/(rEarth + rAtm) )**2 -sin(h)**2 ))
     enddo
-    !print*, 'num_slices: ',   num_slices
-    !print*, 'num_slices/2: ', num_slices/2
-    print*, 'r_atms', r_atms
+    
+    print*, '(r_atms, Ltot)', r_atms, L_tot
+
+    ! Obteniendo longitud de capaz de la Tierra
+    ! Relleando primer parte antes del núcleo
+    do i=1,num_slices/2
+        if(i==1) then
+            L_a(i)= r_atms(i)
+        else
+            L_a(i)= r_atms(i)-r_atms(i-1)
+        endif
+    enddo
+    ! Relleando segunda parte contando núcleo y capaz restantes de la Tierra
+    do i=((num_slices/2)+1),num_slices
+        if(i==num_slices/2+1) then
+            L_a(i) = L_tot - r_atms(num_slices/2)-sum(L_a(2:))
+        else
+            L_a(i) = L_a(10-i)
+        endif
+    enddo
+
+
+    print*, 'L_a', L_a
+
 
     !! Verifica si para un valor dado de angulo h, se encuentra entre dos angulos críticos
     !loop_name: do i = 1, num_slices ! Corre sobre el número de rebanadas de la Tierra por las que viaja el neutrino

@@ -24,7 +24,8 @@ program main_atm
     call read_atm_data()
     !call Eart_3_stages()
     !call Eart_4_stages()
-    call Earth_n_stages()
+    call Earth_Delta_P()
+    !call Earth_n_stages()                    ! #### RETOMAR ESTA SUBROUTINA
     !call probabilities_difference()
     !call vacuum_probability_difference()
 

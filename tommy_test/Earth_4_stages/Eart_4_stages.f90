@@ -37,11 +37,14 @@ subroutine Eart_4_stages()
 
     E_i =   0.0_dp   ! [GeV]
     E_f =   120.0_dp !100.0_dp ! [GeV] !120
-    jump_E = (E_f - E_i)/real(n)
+    jump_E = (E_f - E_i)/real(n)    
+
     
-
-
-
+    !########################################################################
+    !
+    !       Cósigo para gráficos de Tommy O.
+    !
+    !########################################################################
     open(newunit=u, file='tommy_test/Earth_4_stages/sk_zenith_mu_mu_a.dat')
     do i=1,n
         h=PI-(theta_z_i + jump_z*(i-1))        
