@@ -1,9 +1,11 @@
-subroutine Earth_Delta_Pee(n,m)
+subroutine Earth_Delta_Pij_E(n,m,flvr1,flvr2)
     use types
     use constants
     implicit none
-    integer :: n   ! L over E partition [km/Gev]
-    integer :: m   ! CP-violation partition [°]
+    integer :: n     ! L over E partition [km/Gev]
+    integer :: m     ! CP-violation partition [°]
+    integer :: flvr1 ! flvr1 is the initial neutrino flavour
+    integer :: flvr2 ! flvr2 is the final   neutrino flavour   
     real(dp) :: res((m+1)*n,3)
     
     real(dp) :: ro_a(7)         ! [ g/cm^{3} ]
@@ -13,8 +15,6 @@ subroutine Earth_Delta_Pee(n,m)
     integer  :: i,j,k,u,dim
 
     real(dp) :: iterativeProbabilityOfTransitionAB    
-    integer  :: flvr1              ! flvr1 is the flavour with which the neutrino is generated
-    integer  :: flvr2              ! flvr2 is the flavour that is transited 
     real(dp) :: t12,t23,t13,delta  ! Are the three mixing angles and the CP-violation phase of the mixing matrix
     real(dp) :: sm,aM              ! sm,aM are the squared mass difference m=m_21 y M=m_32    
     integer  :: nu                 ! nu is 1 for neutrinos an 2 for antineutrino        
@@ -26,7 +26,7 @@ subroutine Earth_Delta_Pee(n,m)
     real(dp) :: delta_i,delta_f,delta_jump
     character(len=200) :: name,flavour,zenith_name,hierarchy_name,format_string,format_string_2
     real(dp) :: L_tot,E_min,E_max,L_E_i,L_E_f,L_E_j
-    print*, 'Pee...'
+    print*, 'P',flvr1,flvr2
     
     !########################################
     !
@@ -43,14 +43,7 @@ subroutine Earth_Delta_Pee(n,m)
     delta_i=PI        !180.0_dp
     delta_f=2.0_dp*PI !360.0_dp
     delta_jump=(delta_f-delta_i)/real(m)
-    L_a=0.0_dp
-    !########################################
-    !
-    !   Change this variables
-    !
-    !########################################    
-    flvr1=1
-    flvr2=1    
+    L_a=0.0_dp    
     !#######################################
     
     !open(newunit=u, file='tommy_test/delta_P/data.dat')
@@ -63,6 +56,12 @@ subroutine Earth_Delta_Pee(n,m)
     if((flvr1==1).and.(flvr2==2)) flavour='em'
     if((flvr1==2).and.(flvr2==2)) flavour='mm'
     if((flvr1==2).and.(flvr2==1)) flavour='me'
+
+    if((flvr1==3).and.(flvr2==2)) flavour='tm'
+    if((flvr1==2).and.(flvr2==3)) flavour='mt'
+    if((flvr1==3).and.(flvr2==3)) flavour='tt'
+    if((flvr1==1).and.(flvr2==3)) flavour='et'
+    if((flvr1==3).and.(flvr2==1)) flavour='te'
 
     do nu=1,2
     if(nu==1) name='tommy_P'
@@ -87,60 +86,54 @@ subroutine Earth_Delta_Pee(n,m)
         call set_settings_for_4S(h,dim,L_a,ro_a)
         L_tot=sum(L_a)
         E_min=0.1_dp
-        E_max=100.0_dp
-        L_E_i=L_tot/E_max
-        L_E_f=L_tot/E_min        
+        E_max=100.0_dp        
         print*, 'i', i
         write (zenith_name, format_string)  i
         if(i==10) then
-            open(newunit=u, file='tommy_test/delta_P/img_neu/'// &
-                                  trim(name)//trim(flavour)//'_LEdcp_'//'1.0'//'-'//trim(hierarchy_name)//'.dat')
+            open(newunit=u, file='tommy_test/delta_P/img_neu_E_cp/'// &
+                                  trim(name)//trim(flavour)//'_E_dcp_'//'1.0'//'-'//trim(hierarchy_name)//'.dat')
             close(u)
             do j=1,n
-                !call logarithmic_partition(n,j,log10(0.1_dp),log10(100.0_dp),E)
-                call logarithmic_partition(n,j,log10(L_E_i),log10(L_E_f),L_E_j)
-                E=L_tot/L_E_j
+                call logarithmic_partition(n,j,log10(0.1_dp),log10(100.0_dp),E)                
                 do k=1,m+1
                     delta = delta_i + delta_jump*(k-1)                    
                     resutls=  iterativeProbabilityOfTransitionAB(dim,flvr1,flvr2,L_a,ro_a,t12,t23, t13, delta,sm,aM,E,nu,Z,A) &
                              - iterativeProbabilityOfTransitionAB(dim,flvr1,flvr2,L_a,ro_a,t12,t23,-t13, delta,sm,aM,E,nu,Z,A)                    
-                    open(newunit=u, file='tommy_test/delta_P/img_neu/'// &
-                                  trim(name)//trim(flavour)//'_LEdcp_'//'1.0'//'-'//trim(hierarchy_name)//'.dat', &
+                    open(newunit=u, file='tommy_test/delta_P/img_neu_E_cp/'// &
+                                  trim(name)//trim(flavour)//'_E_dcp_'//'1.0'//'-'//trim(hierarchy_name)//'.dat', &
                                   position='append',status='old')
-                        write(u,*)  sum(L_a)/E,delta*180/PI,resutls
+                        write(u,*)  E,delta*180/PI,resutls
                     close(u)
                 enddo
-                open(newunit=u, file='tommy_test/delta_P/img_neu/'// &
-                                  trim(name)//trim(flavour)//'_LEdcp_'//'1.0'//'-'//trim(hierarchy_name)//'.dat', &
+                open(newunit=u, file='tommy_test/delta_P/img_neu_E_cp/'// &
+                                  trim(name)//trim(flavour)//'_E_dcp_'//'1.0'//'-'//trim(hierarchy_name)//'.dat', &
                                   position='append',status='old')
                     write(u,*)  ' '
                 close(u)
             enddo
         else
-            open(newunit=u, file='tommy_test/delta_P/img_neu/'// &
-                                  trim(name)//trim(flavour)//'_LEdcp_0.'//trim(zenith_name)//'-'//trim(hierarchy_name)//'.dat')
+            open(newunit=u, file='tommy_test/delta_P/img_neu_E_cp/'// &
+                                  trim(name)//trim(flavour)//'_E_dcp_0.'//trim(zenith_name)//'-'//trim(hierarchy_name)//'.dat')
             close(u)
             do j=1,n
-                !call logarithmic_partition(n,j,log10(0.1_dp),log10(100.0_dp),E)
-                call logarithmic_partition(n,j,log10(L_E_i),log10(L_E_f),L_E_j)
-                E=L_tot/L_E_j
+                call logarithmic_partition(n,j,log10(0.1_dp),log10(100.0_dp),E)                
                 do k=1,m+1
-                    delta = delta_i + delta_jump*(k-1)                    
+                    delta = delta_i + delta_jump*(k-1)
                     resutls= iterativeProbabilityOfTransitionAB(dim,flvr1,flvr2,L_a,ro_a,t12,t23, t13, delta,sm,aM,E,nu,Z,A) &
                              - iterativeProbabilityOfTransitionAB(dim,flvr1,flvr2,L_a,ro_a,t12,t23,-t13, delta,sm,aM,E,nu,Z,A)                    
-                    open(newunit=u, file='tommy_test/delta_P/img_neu/'//trim(name)//trim(flavour)//'_LEdcp_0.'// &
+                    open(newunit=u, file='tommy_test/delta_P/img_neu_E_cp/'//trim(name)//trim(flavour)//'_E_dcp_0.'// &
                         trim(zenith_name)//'-'//trim(hierarchy_name)//'.dat',position='append',status='old')
-                        write(u,*)  sum(L_a)/E,delta*180/PI,resutls
+                        write(u,*)  E,delta*180/PI,resutls
                     close(u)
                 enddo
-                open(newunit=u, file='tommy_test/delta_P/img_neu/'//trim(name)//trim(flavour)//'_LEdcp_0.'// &
+                open(newunit=u, file='tommy_test/delta_P/img_neu_E_cp/'//trim(name)//trim(flavour)//'_E_dcp_0.'// &
                         trim(zenith_name)//'-'//trim(hierarchy_name)//'.dat',position='append',status='old')
                         write(u,*)  ''
                     close(u)
             enddo
         endif
-    enddo   
+    enddo
     enddo ! Mass hierarchy loop
     enddo ! Neutrino - antineutrino loop
     return
-end subroutine Earth_Delta_Pee
+end subroutine Earth_Delta_Pij_E

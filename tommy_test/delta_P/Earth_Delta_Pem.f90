@@ -25,7 +25,8 @@ subroutine Earth_Delta_Pem(n,m)
     real(dp) :: coz_Z(11),theta_z
     real(dp) :: delta_i,delta_f,delta_jump
     character(len=200) :: name,flavour,zenith_name,hierarchy_name,format_string,format_string_2
-    
+    real(dp) :: L_tot,E_min,E_max,L_E_i,L_E_f,L_E_j
+    print*, 'Pem...'    
     !########################################
     !
     !   Fix this variables
@@ -83,7 +84,11 @@ subroutine Earth_Delta_Pem(n,m)
         endif
         h=PI - acos(coz_Z(i+1))
         call set_settings_for_4S(h,dim,L_a,ro_a)
-        print*, 'dim', dim
+        L_tot=sum(L_a)
+        E_min=0.1_dp
+        E_max=100.0_dp
+        L_E_i=L_tot/E_max
+        L_E_f=L_tot/E_min        
         print*, 'i', i
         write (zenith_name, format_string)  i
         if(i==10) then
@@ -91,7 +96,9 @@ subroutine Earth_Delta_Pem(n,m)
                                   trim(name)//trim(flavour)//'_LEdcp_'//'1.0'//'-'//trim(hierarchy_name)//'.dat')
             close(u)
             do j=1,n
-                call logarithmic_partition(n,j,log10(0.1_dp),log10(100.0_dp),E)
+                !call logarithmic_partition(n,j,log10(0.1_dp),log10(100.0_dp),E)
+                call logarithmic_partition(n,j,log10(L_E_i),log10(L_E_f),L_E_j)
+                E=L_tot/L_E_j
                 do k=1,m+1
                     delta = delta_i + delta_jump*(k-1)                    
                     resutls=  iterativeProbabilityOfTransitionAB(dim,flvr1,flvr2,L_a,ro_a,t12,t23, t13, delta,sm,aM,E,nu,Z,A) &
@@ -113,7 +120,9 @@ subroutine Earth_Delta_Pem(n,m)
                                   trim(name)//trim(flavour)//'_LEdcp_0.'//trim(zenith_name)//'-'//trim(hierarchy_name)//'.dat')
             close(u)
             do j=1,n
-                call logarithmic_partition(n,j,log10(0.1_dp),log10(100.0_dp),E)
+                !call logarithmic_partition(n,j,log10(0.1_dp),log10(100.0_dp),E)
+                call logarithmic_partition(n,j,log10(L_E_i),log10(L_E_f),L_E_j)
+                E=L_tot/L_E_j                
                 do k=1,m+1
                     delta = delta_i + delta_jump*(k-1)                    
                     resutls= iterativeProbabilityOfTransitionAB(dim,flvr1,flvr2,L_a,ro_a,t12,t23, t13, delta,sm,aM,E,nu,Z,A) &
