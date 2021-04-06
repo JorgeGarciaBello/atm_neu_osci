@@ -2,8 +2,8 @@ subroutine Earth_Delta_P()
     use types
     use constants
     implicit none
-    integer, parameter :: n=3000   ! L over E partition [km/Gev]
-    integer, parameter :: m=180   ! CP-violation partition [°]
+    integer, parameter :: n=3500   ! L over E partition [km/Gev]
+    integer, parameter :: m=360   ! CP-violation partition [°]
     
     !call Earth_Delta_Pee(n,m)
     !call Earth_Delta_Pem(n,m)

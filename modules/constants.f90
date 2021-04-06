@@ -7,7 +7,7 @@ module constants
     real(dp), parameter :: GF     = 8.96180870D-38               ! GF is the Fermi constatnt [ eV cm^{3} ]
     real(dp), parameter :: rEarth = 6378.d0                      ! Longitud en [Km]
     real(dp), parameter :: rCore  = 3486.d0                      ! Longitud en [Km]    
-    real(dp), parameter :: rUnder  = 1.d0                      ! Longitud en [Km]    
+    real(dp), parameter :: rUnder = 1.d0                         ! Longitud en [Km]    
 
     real(dp), parameter :: rICore  = 1220.d0                      ! Longitud en [Km]    
     real(dp), parameter :: rOCore  = 3480.d0                      ! Longitud en [Km]    

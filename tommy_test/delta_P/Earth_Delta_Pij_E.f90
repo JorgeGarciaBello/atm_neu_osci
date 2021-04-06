@@ -90,7 +90,7 @@ subroutine Earth_Delta_Pij_E(n,m,flvr1,flvr2)
         print*, 'i', i
         write (zenith_name, format_string)  i
         if(i==10) then
-            open(newunit=u, file='tommy_test/delta_P/img_neu_E_cp/'// &
+            open(newunit=u, file='tommy_test/delta_P/data_10_GeV_360_5000/'// &
                                   trim(name)//trim(flavour)//'_E_dcp_'//'1.0'//'-'//trim(hierarchy_name)//'.dat')
             close(u)
             do j=1,n
@@ -99,20 +99,20 @@ subroutine Earth_Delta_Pij_E(n,m,flvr1,flvr2)
                     delta = delta_i + delta_jump*(k-1)                    
                     resutls=  iterativeProbabilityOfTransitionAB(dim,flvr1,flvr2,L_a,ro_a,t12,t23, t13, delta,sm,aM,E,nu,Z,A) &
                              - iterativeProbabilityOfTransitionAB(dim,flvr1,flvr2,L_a,ro_a,t12,t23,-t13, delta,sm,aM,E,nu,Z,A)                    
-                    open(newunit=u, file='tommy_test/delta_P/img_neu_E_cp/'// &
+                    open(newunit=u, file='tommy_test/delta_P/data_10_GeV_360_5000/'// &
                                   trim(name)//trim(flavour)//'_E_dcp_'//'1.0'//'-'//trim(hierarchy_name)//'.dat', &
                                   position='append',status='old')
                         write(u,*)  E,delta*180/PI,resutls
                     close(u)
                 enddo
-                open(newunit=u, file='tommy_test/delta_P/img_neu_E_cp/'// &
+                open(newunit=u, file='tommy_test/delta_P/data_10_GeV_360_5000/'// &
                                   trim(name)//trim(flavour)//'_E_dcp_'//'1.0'//'-'//trim(hierarchy_name)//'.dat', &
                                   position='append',status='old')
                     write(u,*)  ' '
                 close(u)
             enddo
         else
-            open(newunit=u, file='tommy_test/delta_P/img_neu_E_cp/'// &
+            open(newunit=u, file='tommy_test/delta_P/data_10_GeV_360_5000/'// &
                                   trim(name)//trim(flavour)//'_E_dcp_0.'//trim(zenith_name)//'-'//trim(hierarchy_name)//'.dat')
             close(u)
             do j=1,n
@@ -121,12 +121,12 @@ subroutine Earth_Delta_Pij_E(n,m,flvr1,flvr2)
                     delta = delta_i + delta_jump*(k-1)
                     resutls= iterativeProbabilityOfTransitionAB(dim,flvr1,flvr2,L_a,ro_a,t12,t23, t13, delta,sm,aM,E,nu,Z,A) &
                              - iterativeProbabilityOfTransitionAB(dim,flvr1,flvr2,L_a,ro_a,t12,t23,-t13, delta,sm,aM,E,nu,Z,A)                    
-                    open(newunit=u, file='tommy_test/delta_P/img_neu_E_cp/'//trim(name)//trim(flavour)//'_E_dcp_0.'// &
+                    open(newunit=u, file='tommy_test/delta_P/data_10_GeV_360_5000/'//trim(name)//trim(flavour)//'_E_dcp_0.'// &
                         trim(zenith_name)//'-'//trim(hierarchy_name)//'.dat',position='append',status='old')
                         write(u,*)  E,delta*180/PI,resutls
                     close(u)
                 enddo
-                open(newunit=u, file='tommy_test/delta_P/img_neu_E_cp/'//trim(name)//trim(flavour)//'_E_dcp_0.'// &
+                open(newunit=u, file='tommy_test/delta_P/data_10_GeV_360_5000/'//trim(name)//trim(flavour)//'_E_dcp_0.'// &
                         trim(zenith_name)//'-'//trim(hierarchy_name)//'.dat',position='append',status='old')
                         write(u,*)  ''
                     close(u)
